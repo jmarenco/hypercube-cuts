@@ -173,4 +173,14 @@ public class CoveringModel implements MasterModel
 			e.printStackTrace();
 		}
 	}
+
+	public IloCplex getCplex()
+	{
+		return cplex;
+	}
+	
+	public IloNumVar getVar(int i)
+	{
+		return x[i];
+	}
 }

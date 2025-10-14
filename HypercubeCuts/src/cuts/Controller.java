@@ -108,6 +108,11 @@ public class Controller
 			System.out.print("max(supp): " + _maxsupport + " | ");
 			System.out.print("avg(viol): " + String.format("%.3f", _violation / _iterations) + " | ");
 		}
+		else if( _iterations == 1 )
+		{
+			System.out.print("avg(|N|): " + String.format("%.3f", _nsize) + " | ");
+			System.out.print("avg(feas): " + String.format("%.3f", _feasibles) + " | | | | | ");
+		}
 		else
 		{
 			System.out.print(" | | | | | | ");

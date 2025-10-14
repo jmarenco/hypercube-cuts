@@ -106,7 +106,7 @@ public class StableModel implements MasterModel
 		
 		return ret;
 	}
-	
+
 	public String getSummary()
 	{
 		String ret = "";
@@ -173,5 +173,15 @@ public class StableModel implements MasterModel
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public IloCplex getCplex()
+	{
+		return cplex;
+	}
+	
+	public IloNumVar getVar(int i)
+	{
+		return x[i];
 	}
 }
