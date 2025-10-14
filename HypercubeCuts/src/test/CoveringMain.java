@@ -10,7 +10,7 @@ import cuts.Point;
 
 public class CoveringMain
 {
-	public static void run(String[] args)
+	public static void run(ArgMap argmap)
 	{
 		// Instance
 		Matrix M = test();
@@ -18,12 +18,9 @@ public class CoveringMain
 		// Runs procedure
 		Controller controller = new Controller(new CoveringModel(M), new CoveringFunction(M), new CoveringRounder(M));
 		controller.run();
-		
-		// Gets integer optimal solution
-		System.out.println("Integer optimal value: " + integerOptimal(M));
 	}
 
-	private static int integerOptimal(Matrix M)
+	public static int integerOptimal(Matrix M)
 	{
 		CoveringModel integer = new CoveringModel(M, true);
 		integer.create();

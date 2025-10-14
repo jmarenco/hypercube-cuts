@@ -12,20 +12,17 @@ import cuts.Point;
 
 public class StableMain
 {
-	public static void run(String[] args)
+	public static void run(ArgMap argmap)
 	{
 		// Instance
-		Graph G = erdosRenyi(15, 0.4, 0);
+		Graph G = erdosRenyi(argmap.intArg("-n", 15), argmap.doubleArg("-d", 0.4), argmap.intArg("-s", 0));
 		
 		// Runs procedure
 		Controller controller = new Controller(new StableModel(G), new StableFunction(G), new StableRounder(G));
 		controller.run();
-		
-		// Gets integer optimal solution
-		System.out.println("Integer optimal value: " + integerOptimal(G));
 	}
 
-	private static int integerOptimal(Graph G)
+	public static int integerOptimal(Graph G)
 	{
 		StableModel integer = new StableModel(G, true);
 		integer.create();

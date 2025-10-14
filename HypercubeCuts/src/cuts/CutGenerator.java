@@ -266,7 +266,7 @@ public class CutGenerator
 			return;
 
 		System.out.print("Round " + _rounds + ": |N| = " + _N.size() + ", ");
-		System.out.print(this.getNinfeasibles() + " feas, avg infeas = ");
+		System.out.print(this.getNfeasibles() + " feas, avg infeas = ");
 		System.out.print(String.format("%.3f", this.getNaverageInfeasibility()) + ";");
 		System.out.print(" |C| = " + _C.size() + "; ");
 		System.out.print(String.format("%.2f", (System.currentTimeMillis() - _start) / 1000.0) + " sec");
@@ -288,7 +288,7 @@ public class CutGenerator
 		return _N.stream().mapToDouble(x -> _f.get(x)).average().orElse(0);
 	}
 	
-	public long getNinfeasibles()
+	public long getNfeasibles()
 	{
 		return _N.stream().filter(x -> _f.feasible(x)).count();
 	}
