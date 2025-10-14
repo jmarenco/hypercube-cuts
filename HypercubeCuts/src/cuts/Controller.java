@@ -49,7 +49,7 @@ public class Controller
 			
 			showResults(xstar, cutter, dv);
 			
-			violated = dv != null ? dv.violation(xstar) > 0 : false;
+			violated = dv != null ? dv.violation(xstar) > 0.001 : false;
 			_master.add(dv);
 
 			_iterations += 1;
