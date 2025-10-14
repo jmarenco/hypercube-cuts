@@ -47,4 +47,9 @@ public class CoveringRounder implements Rounder
 		
 		return ret;
 	}
+	
+	public static void setUpperRoundingProbabilityForOneHalf(double value)
+	{
+		_upperRoundingProbabilityForOneHalf = value;
+	}
 }

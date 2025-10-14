@@ -22,10 +22,10 @@ public class CutGenerator
 	private long _start;
 	private long _end;
 	
-	private boolean _verbose = false;
-	private boolean _roundSummary = false;
-	private boolean _cplexLog = false;
-	private long _maxNsize = 10000;
+	private static boolean _verbose = false;
+	private static boolean _roundSummary = false;
+	private static boolean _cplexLog = false;
+	private static long _maxNsize = 10000;
 	
 	public CutGenerator(Point xstar, Point xbar, InfeasibilityFunction f)
 	{
@@ -296,5 +296,11 @@ public class CutGenerator
 	public double getElapsedTime()
 	{
 		return (_end - _start) / 1000.0;
+	}
+	
+	public static void setMaxNsize(int value)
+	{
+		if( value > 0 )
+			_maxNsize = value;
 	}
 }

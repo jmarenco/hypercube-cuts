@@ -16,6 +16,8 @@ public class Controller
 	private int _minsupport = Integer.MAX_VALUE;
 	private int _maxsupport = 0;
 	private double _violation = 0;
+	private double _firstobj = Double.POSITIVE_INFINITY;
+	private double _lastobj = 0;
 	
 	private static boolean _verbose = false;
 	
@@ -37,6 +39,9 @@ public class Controller
 			Point xbar = _rounder.round(xstar);
 			Point xfeas = _rounder.roundToFeasible(xstar);
 			
+			_firstobj = _firstobj == Double.POSITIVE_INFINITY ? _master.getObjective() : _firstobj;
+			_lastobj = _master.getObjective();
+
 			showPoints(xstar, xbar, xfeas);
 			
 			CutGenerator cutter = new CutGenerator(xstar, xbar, _f);
@@ -91,6 +96,8 @@ public class Controller
 		System.out.print("v" + EntryPoint.version() + " | ");
 		System.out.print(_iterations + " its | ");
 		System.out.print(_rounds + " rounds | ");
+		System.out.print("LR: " + _firstobj + " | ");
+		System.out.print("cLR: " + _lastobj + " | ");
 		
 		if( _iterations > 1 )
 		{

@@ -56,4 +56,9 @@ public class StableRounder implements Rounder
 		
 		return ret;
 	}
+	
+	public static void setUpperRoundingProbabilityForOneHalf(double value)
+	{
+		_upperRoundingProbabilityForOneHalf = value;
+	}
 }
