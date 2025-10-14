@@ -209,7 +209,6 @@ public class CutGenerator
 			if( _cplexLog == false )
 				cplex.setOut(null);
 
-			cplex.exportModel("c:\\users\\jmarenco\\desktop\\modelo.lp");
 			cplex.solve();
 			
 			// Get inequality
