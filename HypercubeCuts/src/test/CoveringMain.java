@@ -7,20 +7,34 @@ import java.util.Random;
 import covering.CoveringFunction;
 import covering.CoveringModel;
 import covering.CoveringRounder;
+import covering.CoveringCallback;
 
 import cuts.Controller;
+import cuts.CutGenerator;
 import cuts.Point;
 
 public class CoveringMain
 {
 	public static void run(ArgMap argmap)
 	{
-		// Instance
-		Matrix M = randomMatrix(argmap.intArg("-m", 5), argmap.intArg("-n", 7), argmap.doubleArg("-d", 0.4), argmap.intArg("-s", 0));
+		// Statistics
+		CoveringCallback callback = new CoveringCallback(argmap);
+		CutGenerator.setCallback(callback);
 		
-		// Runs procedure
-		Controller controller = new Controller(new CoveringModel(M), new CoveringFunction(M), new CoveringRounder(M));
-		controller.run();
+		// Runs many instances
+		for(int k=0; k < argmap.intArg("-ms", 1); ++k)
+		{
+			// Instance
+			Matrix M = randomMatrix(argmap.intArg("-m", 5), argmap.intArg("-n", 7), argmap.doubleArg("-d", 0.4), argmap.intArg("-s", 0) + k);
+			callback.set(M);
+		
+			// Runs procedure
+			Controller controller = new Controller(new CoveringModel(M), new CoveringFunction(M), new CoveringRounder(M));
+			controller.run();
+		}
+		
+		// Shows statistics
+		callback.show();
 	}
 
 	public static int integerOptimal(Matrix M)

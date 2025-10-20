@@ -7,7 +7,7 @@ import stableset.StableRounder;
 
 public class EntryPoint
 {
-	private static String _version = "0.01";
+	private static String _version = "0.02";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
