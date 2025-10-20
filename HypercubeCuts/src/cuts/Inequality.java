@@ -41,7 +41,7 @@ public class Inequality
 	
 	public boolean violated(Point x)
 	{
-		return violation(x) < -0.01;
+		return violation(x) > 0.01;
 	}
 	
 	public int supportSize()

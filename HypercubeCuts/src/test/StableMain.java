@@ -4,22 +4,36 @@ import stableset.Graph;
 import stableset.StableFunction;
 import stableset.StableModel;
 import stableset.StableRounder;
+import stableset.StableCallback;
 
 import java.util.Random;
 
 import cuts.Controller;
+import cuts.CutGenerator;
 import cuts.Point;
 
 public class StableMain
 {
 	public static void run(ArgMap argmap)
 	{
-		// Instance
-		Graph G = erdosRenyi(argmap.intArg("-n", 15), argmap.doubleArg("-d", 0.4), argmap.intArg("-s", 0));
+		// Statistics
+		StableCallback callback = new StableCallback();
+		CutGenerator.setCallback(callback);
 		
-		// Runs procedure
-		Controller controller = new Controller(new StableModel(G), new StableFunction(G), new StableRounder(G));
-		controller.run();
+		// Runs many instances
+		for(int k=0; k < argmap.intArg("-ms", 1); ++k)
+		{
+			// Instance
+			Graph G = erdosRenyi(argmap.intArg("-n", 15), argmap.doubleArg("-d", 0.4), argmap.intArg("-s", 0) + k);
+			callback.set(G);
+	
+			// Runs procedure
+			Controller controller = new Controller(new StableModel(G), new StableFunction(G), new StableRounder(G));
+			controller.run();
+		}
+		
+		// Shows statistics
+		callback.show();
 	}
 
 	public static int integerOptimal(Graph G)
