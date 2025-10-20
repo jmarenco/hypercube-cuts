@@ -36,6 +36,7 @@ public class EntryPoint
 		System.out.println("  -n    Size of instance if random");
 		System.out.println("  -d    Density of instance if random");
 		System.out.println("  -s    Seed of instance if random");
+		System.out.println("  -ms   Multiple runs with seed (-s) to (-s)+(-ms)");
 		System.out.println("  -m    Number of elements if random covering");
 		System.out.println("  -vc   Verbose controller");
 		System.out.println("  -mn   Max size for |N|");
