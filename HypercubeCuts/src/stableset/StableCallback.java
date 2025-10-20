@@ -3,10 +3,13 @@ package stableset;
 import cuts.CutFoundCallback;
 import cuts.Inequality;
 import cuts.Point;
+import test.ArgMap;
+import test.EntryPoint;
 
 public class StableCallback implements CutFoundCallback
 {
 	private Graph G;
+	private ArgMap _argmap;
 	
 	private int _generated = 0;
 	private int _cliques = 0;
@@ -22,6 +25,11 @@ public class StableCallback implements CutFoundCallback
 	private double _totalViolation = 0;
 	private double _totalDensity = 0;
 	
+	public StableCallback(ArgMap argmap)
+	{
+		_argmap = argmap;
+	}
+
 	public void set(Graph graph)
 	{
 		G = graph;
@@ -98,18 +106,19 @@ public class StableCallback implements CutFoundCallback
 	
 	public void show()
 	{
-		System.out.println("Generated: " + _generated);
-		System.out.println("Cliques: " + _cliques);
-		System.out.println("Cycles: " + _cycles);
-		System.out.println("Violated: " + _violated);
-		System.out.println("Total support: " + _totalSupport);
-		System.out.println("Min support: " + _minSupport);
-		System.out.println("Max support: " + _maxSupport);
-		System.out.println("Total degree: " + _totalDegree);
-		System.out.println("Min degree: " + _minDegree);
-		System.out.println("Max degree: " + _maxDegree);
-		System.out.println("Total rel. support: " + _totalRelativeSupport);
-		System.out.println("Total violation: " + _totalViolation);
-		System.out.println("Total density: " + _totalDensity);
+		System.out.print("SC " + EntryPoint.version() + " | " + _generated + " gen, ");
+		System.out.print(_cliques + " clq, ");
+		System.out.print(_cycles + " cycles | ");
+		System.out.print(_violated + " violated, ");
+		System.out.print("Total: " + _totalViolation + " | ");
+		System.out.print("Total support: " + _totalSupport + ", ");
+		System.out.print("min: " + _minSupport + ", ");
+		System.out.print("max: " + _maxSupport + ", ");
+		System.out.print("total rel: " + _totalRelativeSupport + " | ");
+		System.out.print("Total degree: " + _totalDegree + ", ");
+		System.out.print("min: " + _minDegree + ", ");
+		System.out.print("max: " + _maxDegree + " | ");
+		System.out.print("Total density: " + _totalDensity + " | ");
+		System.out.println(_argmap);
 	}
 }

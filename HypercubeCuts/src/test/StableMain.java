@@ -17,7 +17,7 @@ public class StableMain
 	public static void run(ArgMap argmap)
 	{
 		// Statistics
-		StableCallback callback = new StableCallback();
+		StableCallback callback = new StableCallback(argmap);
 		CutGenerator.setCallback(callback);
 		
 		// Runs many instances
