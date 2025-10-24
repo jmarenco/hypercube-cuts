@@ -23,6 +23,8 @@ public class CutGenerator
 	private long _end;
 	
 	private static boolean _verbose = false;
+	private static boolean _showSets = false;
+	private static boolean _showPropagatedPoints = false;
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
 	private static long _maxNsize = 10000;
@@ -115,7 +117,8 @@ public class CutGenerator
 			else
 				result = "already in N or C";
 
-			showPoint("y", y, result);
+			if( _showPropagatedPoints == true )
+				showPoint("y", y, result);
 		}
 		
 		_N.remove(x);
@@ -246,14 +249,16 @@ public class CutGenerator
 		System.out.println();
 		System.out.println(text);
 		
-		if( showN == true )
+		if( showN == true && _showSets == true )
 			System.out.println(" N = " + _N);
 		
-		if( showC == true )
+		if( showC == true && _showSets == true )
 			System.out.println(" C = " + _C);
 		
+		System.out.print("|N| = " + _N.size() + ", |C| = " + _C.size());
+
 		if( x != null )
-			System.out.println(" x = " + x + " - f(x) = " + _f.get(x));
+			System.out.println(", x = " + x + " - f(x) = " + _f.get(x));
 	}
 	
 	private void showPoint(String name, Point y, String text)
@@ -311,5 +316,10 @@ public class CutGenerator
 	public static void setCallback(CutFoundCallback cutFound)
 	{
 		_cutFound = cutFound;
+	}
+
+	public static void setVerbose(boolean value)
+	{
+		_verbose = value;
 	}
 }
