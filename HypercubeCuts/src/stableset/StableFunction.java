@@ -9,6 +9,7 @@ import cuts.Point;
 public class StableFunction implements InfeasibilityFunction
 {
 	private Graph G;
+	private static boolean _addVerticesWhenInfeasible = false;
 	
 	public StableFunction(Graph graph)
 	{
@@ -25,6 +26,12 @@ public class StableFunction implements InfeasibilityFunction
 		for(int i=0; i<G.size(); ++i)
 		for(int j=i+1; j<G.size(); ++j) if( G.isEdge(i, j) )
 			ret += Math.max(0, x.get(i) + x.get(j) - 1);
+		
+		if( ret > 0 && _addVerticesWhenInfeasible == true )
+		{
+			for(int i=0; i<G.size(); ++i) if( x.get(i) > 0 )
+				ret += 1.0 / G.size();
+		}
 		
 		return ret;
 	}

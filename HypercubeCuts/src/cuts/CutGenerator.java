@@ -89,7 +89,7 @@ public class CutGenerator
 	
 	private boolean propagate(Point x)
 	{
-		showSets("Propagating!", true, true, x);
+		showSets("Propagating! Round: " + _rounds + ", " + String.format("%.2f", (System.currentTimeMillis() - _start) / 1000.0) + " sec.", true, true, x);
 
 		if( _N.contains(x) == false )
 			throw new RuntimeException("Asked to propagate point not in N!");
@@ -246,8 +246,10 @@ public class CutGenerator
 		if( _verbose == false )
 			return;
 
-		System.out.println();
-		System.out.println(text);
+		if( _showPropagatedPoints == true )
+			System.out.println();
+		
+		System.out.print(text + " - ");
 		
 		if( showN == true && _showSets == true )
 			System.out.println(" N = " + _N);
