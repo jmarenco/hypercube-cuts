@@ -105,7 +105,7 @@ public class CutGenerator
 			
 			if( _N.contains(y) == false && _C.contains(y) == false )
 			{
-				if( _f.get(y) <= _f.get(x) )
+				if( _f.get(y, _xbar) <= _f.get(x, _xbar) )
 				{
 					_N.add(y);
 					ret = true;
@@ -260,7 +260,7 @@ public class CutGenerator
 		System.out.print("|N| = " + _N.size() + ", |C| = " + _C.size());
 
 		if( x != null )
-			System.out.println(", x = " + x + " - f(x) = " + _f.get(x));
+			System.out.println(", x = " + x + " - f(x) = " + _f.get(x, _xbar));
 	}
 	
 	private void showPoint(String name, Point y, String text)
@@ -268,7 +268,7 @@ public class CutGenerator
 		if( _verbose == false )
 			return;
 
-		System.out.println(" " + name + " = " + y + " - f(x) = " + _f.get(y) + (text != null ? ", " + text : ""));
+		System.out.println(" " + name + " = " + y + " - f(x) = " + _f.get(y, _xbar) + (text != null ? ", " + text : ""));
 	}
 	
 	private void showRoundSummary()
@@ -296,7 +296,7 @@ public class CutGenerator
 	
 	public double getNaverageInfeasibility()
 	{
-		return _N.stream().mapToDouble(x -> _f.get(x)).average().orElse(0);
+		return _N.stream().mapToDouble(x -> _f.get(x, _xbar)).average().orElse(0);
 	}
 	
 	public long getNfeasibles()

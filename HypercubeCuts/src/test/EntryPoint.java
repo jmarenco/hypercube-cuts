@@ -3,11 +3,12 @@ package test;
 import covering.CoveringRounder;
 import cuts.Controller;
 import cuts.CutGenerator;
+import stableset.StableFunction;
 import stableset.StableRounder;
 
 public class EntryPoint
 {
-	private static String _version = "0.04";
+	private static String _version = "0.05";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -22,6 +23,8 @@ public class EntryPoint
 		CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		StableRounder.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 		CoveringRounder.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 0.0));
+		StableFunction.onlyRemoveVerticesWhenInfeasible(_argmap.containsArg("-rwi"));
+		StableFunction.removeVerticesInOrder(_argmap.containsArg("-rio"));
 		
 		if( _argmap.stringArg("-p", "xxx").equals("stab") )
 			StableMain.run(_argmap);
@@ -43,6 +46,8 @@ public class EntryPoint
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
 		System.out.println("  -rp   Rounding probability for 1/2 variables");
+		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
+		System.out.println("  -rio  Remove vertices in order for stab");
 	}
 	
 	public static String version()

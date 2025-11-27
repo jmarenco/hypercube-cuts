@@ -15,7 +15,7 @@ public class CoveringFunction implements InfeasibilityFunction
 		M = matrix;
 	}
 
-	public double get(Point x)
+	public double get(Point x, Point xbar)
 	{
 		if( x.size() != M.sets() )
 			throw new RuntimeException("Number of sets and point do not match!");
@@ -37,7 +37,7 @@ public class CoveringFunction implements InfeasibilityFunction
 
 	public boolean feasible(Point x)
 	{
-		return get(x) <= 0;
+		return get(x, null) <= 0;
 	}
 
 	public ArrayList<Inequality> compatibilityConstraints(Point xbar)
