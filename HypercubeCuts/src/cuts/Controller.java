@@ -20,6 +20,7 @@ public class Controller
 	private double _lastobj = 0;
 	
 	private static boolean _verbose = false;
+	private static boolean _aggresiveWhenNotViolated = false;
 	
 	public Controller(MasterModel masterModel, InfeasibilityFunction f, Rounder rounder)
 	{
@@ -60,6 +61,14 @@ public class Controller
 			_minsupport = dv != null ? Math.min(_minsupport, dv.supportSize()) : _minsupport;
 			_maxsupport = dv != null ? Math.max(_maxsupport, dv.supportSize()) : _maxsupport;
 			_violation += dv != null ? dv.violation(xstar) : 0;
+			
+			if( violated == false && _aggresiveWhenNotViolated == true )
+			{
+				_f.setAggresive();
+				_aggresiveWhenNotViolated = false;
+				
+				violated = true;
+			}
 		}
 		
 		_master.close();
@@ -125,5 +134,10 @@ public class Controller
 	public static void setVerbose(boolean value)
 	{
 		_verbose = value;
+	}
+	
+	public static void setAggresiveWhenNotViolated(boolean value)
+	{
+		_aggresiveWhenNotViolated = value;
 	}
 }

@@ -30,6 +30,8 @@ public class StableMain
 			// Runs procedure
 			Controller controller = new Controller(new StableModel(G), new StableFunction(G), new StableRounder(G));
 			controller.run();
+
+			System.out.println("Opt: " + integerOptimal(G));
 		}
 		
 		// Shows statistics

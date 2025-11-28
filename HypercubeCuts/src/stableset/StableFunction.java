@@ -84,6 +84,12 @@ public class StableFunction implements InfeasibilityFunction
 		return ret;
 	}
 	
+	public void setAggresive()
+	{
+		_onlyRemoveVerticesWhenInfeasible = false;
+		_removeVerticesInOrder = false;
+	}
+	
 	public static void onlyRemoveVerticesWhenInfeasible(boolean value)
 	{
 		_onlyRemoveVerticesWhenInfeasible = value;

@@ -8,7 +8,7 @@ import stableset.StableRounder;
 
 public class EntryPoint
 {
-	private static String _version = "0.05";
+	private static String _version = "0.06";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -19,6 +19,7 @@ public class EntryPoint
 			showParameters();
 		
 		Controller.setVerbose(_argmap.containsArg("-vc"));
+		Controller.setAggresiveWhenNotViolated(_argmap.containsArg("-awn"));
 		CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		StableRounder.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
@@ -48,6 +49,7 @@ public class EntryPoint
 		System.out.println("  -rp   Rounding probability for 1/2 variables");
 		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
 		System.out.println("  -rio  Remove vertices in order for stab");
+		System.out.println("  -awn  Aggresive when not violated");
 	}
 	
 	public static String version()

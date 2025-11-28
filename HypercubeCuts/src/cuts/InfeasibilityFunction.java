@@ -8,4 +8,5 @@ public interface InfeasibilityFunction
 	public boolean feasible(Point x);
 	public ArrayList<Inequality> compatibilityConstraints(Point xbar);
 	public double getObjective(Point xfeas);
+	public void setAggresive();
 }
