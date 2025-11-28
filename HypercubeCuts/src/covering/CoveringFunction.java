@@ -70,7 +70,16 @@ public class CoveringFunction implements InfeasibilityFunction
 		return ret;
 	}
 
-	public void setAggresive()
+	public void resetAggresiveness()
 	{
+	}
+
+	public void moreAggresive()
+	{
+	}
+	
+	public boolean isMaximumAggresive()
+	{
+		return true;
 	}
 }

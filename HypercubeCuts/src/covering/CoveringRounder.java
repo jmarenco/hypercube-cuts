@@ -52,4 +52,17 @@ public class CoveringRounder implements Rounder
 	{
 		_upperRoundingProbabilityForOneHalf = value;
 	}
+	
+	public void resetAggresiveness()
+	{
+	}
+
+	public void moreAggresive()
+	{
+	}
+
+	public boolean isMaximumAggresive()
+	{
+		return true;
+	}
 }

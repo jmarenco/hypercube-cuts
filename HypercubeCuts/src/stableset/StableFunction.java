@@ -9,12 +9,18 @@ import cuts.Point;
 public class StableFunction implements InfeasibilityFunction
 {
 	private Graph G;
-	private static boolean _onlyRemoveVerticesWhenInfeasible = false;
-	private static boolean _removeVerticesInOrder = false;
+	private static boolean _onlyRemoveVerticesWhenInfeasible;
+	private static boolean _removeVerticesInOrder;
+
+	private static boolean _initialOnlyRemoveVerticesWhenInfeasible = false;
+	private static boolean _initialRemoveVerticesInOrder = false;
 	
 	public StableFunction(Graph graph)
 	{
 		G = graph;
+		
+		_onlyRemoveVerticesWhenInfeasible = _initialOnlyRemoveVerticesWhenInfeasible;
+		_removeVerticesInOrder = _initialRemoveVerticesInOrder;
 	}
 
 	public double get(Point x, Point xbar)
@@ -84,19 +90,30 @@ public class StableFunction implements InfeasibilityFunction
 		return ret;
 	}
 	
-	public void setAggresive()
+	public void resetAggresiveness()
+	{
+		_onlyRemoveVerticesWhenInfeasible = _initialOnlyRemoveVerticesWhenInfeasible;
+		_removeVerticesInOrder = _initialRemoveVerticesInOrder;
+	}
+
+	public void moreAggresive()
 	{
 		_onlyRemoveVerticesWhenInfeasible = false;
 		_removeVerticesInOrder = false;
 	}
 	
+	public boolean isMaximumAggresive()
+	{
+		return _onlyRemoveVerticesWhenInfeasible == false && _removeVerticesInOrder == false;
+	}
+	
 	public static void onlyRemoveVerticesWhenInfeasible(boolean value)
 	{
-		_onlyRemoveVerticesWhenInfeasible = value;
+		_initialOnlyRemoveVerticesWhenInfeasible = value;
 	}
 	
 	public static void removeVerticesInOrder(boolean value)
 	{
-		_removeVerticesInOrder = value;
+		_initialRemoveVerticesInOrder = value;
 	}
 }

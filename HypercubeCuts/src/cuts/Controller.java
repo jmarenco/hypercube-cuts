@@ -34,7 +34,11 @@ public class Controller
 		_master.create();
 		
 		boolean violated = true;
-		while( violated == true )
+		boolean optimal = false;
+		
+		Point best = null;
+		
+		while( violated == true && optimal == false )
 		{
 			Point xstar = _master.solve();
 			Point xbar = _rounder.round(xstar);
@@ -43,13 +47,19 @@ public class Controller
 			_firstobj = _firstobj == Double.POSITIVE_INFINITY ? _master.getObjective() : _firstobj;
 			_lastobj = _master.getObjective();
 
-			showPoints(xstar, xbar, xfeas);
+			showPoints(xstar, xbar, xfeas, best);
 			
 			CutGenerator cutter = new CutGenerator(xstar, xbar, _f);
 			Inequality dv = cutter.generate();
 			
 			showResults(xstar, cutter, dv);
 			
+			if( best == null || _f.getObjective(xfeas) > _f.getObjective(best) )
+				best = xfeas;
+			
+			if( Math.abs(_master.getObjective() - _f.getObjective(best)) < 0.01 )
+				optimal = true;
+
 			violated = dv != null ? dv.violation(xstar) > 0.001 : false;
 			_master.add(dv);
 
@@ -64,18 +74,25 @@ public class Controller
 			
 			if( violated == false && _aggresiveWhenNotViolated == true )
 			{
-				_f.setAggresive();
-				_aggresiveWhenNotViolated = false;
-				
 				violated = true;
+
+				if( _f.isMaximumAggresive() == false )
+					_f.moreAggresive();
+				else if( _rounder.isMaximumAggresive() == false )
+				{
+					_f.resetAggresiveness();
+					_rounder.moreAggresive();
+				}
+				else
+					violated = false;
 			}
 		}
 		
 		_master.close();
-		showSummary();
+		showSummary(best);
 	}
 	
-	private void showPoints(Point xstar, Point xbar, Point xfeas)
+	private void showPoints(Point xstar, Point xbar, Point xfeas, Point best)
 	{
 		if( _verbose == true )
 		{
@@ -83,6 +100,7 @@ public class Controller
 			System.out.print("x*: " + xstar.fractionalEntries() + " fract | ");
 			System.out.print("xbar: " + xbar.positiveEntries() + " nonzeros | ");
 			System.out.print("xfeas: " + xfeas.positiveEntries() + ", gap = " + String.format("%.3f", (_master.getObjective() - _f.getObjective(xfeas)) * 100.0 / _master.getObjective()) + " % | ");
+			System.out.print(best != null ? "best: " + best.positiveEntries() + ", gap = " + String.format("%.3f", (_master.getObjective() - _f.getObjective(best)) * 100.0 / _master.getObjective()) + " % | " : " | ");
 		}
 	}
 	
@@ -100,13 +118,14 @@ public class Controller
 		}
 	}
 
-	private void showSummary()
+	private void showSummary(Point best)
 	{
 		System.out.print("v" + EntryPoint.version() + " | ");
 		System.out.print(_iterations + " its | ");
 		System.out.print(_rounds + " rounds | ");
 		System.out.print("LR: " + _firstobj + " | ");
 		System.out.print("cLR: " + _lastobj + " | ");
+		System.out.print("LB: " + _f.getObjective(best) + " | ");
 		
 		if( _iterations > 1 )
 		{
