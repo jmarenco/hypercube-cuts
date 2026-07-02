@@ -27,7 +27,7 @@ public class CutGenerator
 	private static boolean _showPropagatedPoints = false;
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
-	private static long _maxNsize = 10000;
+	private static long _maxNsize = 100000;
 	private static CutFoundCallback _cutFound = null;
 	
 	public CutGenerator(Point xstar, Point xbar, InfeasibilityFunction f)

@@ -2,12 +2,11 @@ package test;
 
 import generalcuts.Instance;
 import generalcuts.MasterModel;
-import stableset.Graph;
 import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.06";
+	private static String _version = "0.07";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -73,6 +72,7 @@ public class EntryPoint
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
+		generalcuts.Rounder.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 
 		tailoredcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		tailoredcuts.Controller.setAggresiveWhenNotViolated(_argmap.containsArg("-awn"));

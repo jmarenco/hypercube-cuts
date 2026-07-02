@@ -27,7 +27,7 @@ public class Controller
 	{
 		_instance = instance;
 		_master = new MasterModel(_instance);
-		_f = new InfeasibilityFunction(instance);
+		_f = new InfeasibilityFunctionClassical(instance);
 		_rounder = new Rounder();
 	}
 	
