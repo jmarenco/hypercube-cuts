@@ -72,6 +72,15 @@ public class Point
 		
 		return ret;
 	}
+	
+	public double oneNorm()
+	{
+		double ret = 0;
+		for(int i=0; i<_x.length; ++i)
+			ret += Math.abs(_x[i]);
+		
+		return ret;
+	}
 
 	@Override
 	public int hashCode()

@@ -19,9 +19,12 @@ public class Controller
 	private double _violation = 0;
 	private double _firstobj = Double.POSITIVE_INFINITY;
 	private double _lastobj = 0;
+	private double _time;
+	private long _start;
 	
 	private static boolean _verbose = false;
 	private static boolean _showInequalities = false;
+	private static String _infeasibilityFunction = "class";
 	
 	public Controller(Instance instance)
 	{
@@ -32,6 +35,7 @@ public class Controller
 	
 	public void run()
 	{
+		_start = System.currentTimeMillis();
 		_master.create();
 		
 		boolean violated = true;
@@ -41,7 +45,7 @@ public class Controller
 			Point xstar = _master.solve();
 			Point xbar = _rounder.round(xstar);
 			
-			_f = new InfeasibilityFunctionClassical(_instance, xbar);
+			_f = createInfeasibilityFunction(xbar);
 			_firstobj = _firstobj == Double.POSITIVE_INFINITY ? _master.getObjective() : _firstobj;
 			_lastobj = _master.getObjective();
 
@@ -66,9 +70,22 @@ public class Controller
 		}
 		
 		_master.close();
+		_time = (System.currentTimeMillis() - _start) / 1000.0;
+		
 		showSummary();
 	}
 	
+	private InfeasibilityFunction createInfeasibilityFunction(Point xbar)
+	{
+		if( _infeasibilityFunction.toLowerCase().trim().equals("class") )
+			return new InfeasibilityFunctionClassical(_instance, xbar);
+
+		if( _infeasibilityFunction.toLowerCase().trim().equals("card") )
+			return new InfeasibilityFunctionCardinality(_instance, xbar);
+		
+		throw new RuntimeException("Unknown infeasibility function: " + _infeasibilityFunction);
+	}
+
 	private void showPoints(Point xstar, Point xbar)
 	{
 		if( _verbose == true )
@@ -101,6 +118,7 @@ public class Controller
 		System.out.print(_rounds + " rounds | ");
 		System.out.print("LR: " + _firstobj + " | ");
 		System.out.print("cLR: " + _lastobj + " | ");
+		System.out.print(String.format("%.2f", _time) + " sec. | ");
 		
 		if( _iterations > 1 )
 		{
@@ -133,5 +151,10 @@ public class Controller
 	public static void setShowInequalities(boolean value)
 	{
 		_showInequalities = value;
+	}
+	
+	public static void setInfeasibilityFunction(String value)
+	{
+		_infeasibilityFunction = value;
 	}
 }

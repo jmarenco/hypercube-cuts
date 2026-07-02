@@ -58,6 +58,7 @@ public class EntryPoint
 		System.out.println("  -vc   Verbose controller");
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
+		System.out.println("  -if   Infeasibility function [class|card]");
 		System.out.println("  -rp   Rounding probability for 1/2 variables");
 		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
 		System.out.println("  -rio  Remove vertices in order for stab");
@@ -69,6 +70,7 @@ public class EntryPoint
 		generalcuts.MasterModel.setVerbose(_argmap.containsArg("-vm"));
 		generalcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		generalcuts.Controller.setShowInequalities(_argmap.containsArg("-showcuts"));
+		generalcuts.Controller.setInfeasibilityFunction(_argmap.stringArg("-if", "class"));
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
