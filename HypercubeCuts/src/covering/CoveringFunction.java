@@ -2,9 +2,9 @@ package covering;
 
 import java.util.ArrayList;
 
-import cuts.Inequality;
-import cuts.InfeasibilityFunction;
-import cuts.Point;
+import tailoredcuts.Inequality;
+import tailoredcuts.InfeasibilityFunction;
+import tailoredcuts.Point;
 
 public class CoveringFunction implements InfeasibilityFunction
 {

@@ -1,11 +1,10 @@
 package stableset;
 
-import cuts.Inequality;
-import cuts.MasterModel;
-import cuts.Point;
-
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.Status;
+import tailoredcuts.Inequality;
+import tailoredcuts.MasterModel;
+import tailoredcuts.Point;
 import ilog.concert.IloNumVar;
 import ilog.concert.IloNumExpr;
 

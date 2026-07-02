@@ -1,8 +1,8 @@
 package stableset;
 
-import cuts.CutFoundCallback;
-import cuts.Inequality;
-import cuts.Point;
+import tailoredcuts.CutFoundCallback;
+import tailoredcuts.Inequality;
+import tailoredcuts.Point;
 import test.ArgMap;
 import test.EntryPoint;
 

@@ -1,9 +1,9 @@
 package covering;
 
-import cuts.Point;
-import cuts.Rounder;
-
 import java.util.Random;
+
+import tailoredcuts.Point;
+import tailoredcuts.Rounder;
 
 public class CoveringRounder implements Rounder
 {

@@ -1,4 +1,4 @@
-package cuts;
+package generalcuts;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -45,7 +45,7 @@ public class CutGenerator
 	public Inequality generate()
 	{
 		initialize();
-		
+			
 		if( _xstar.integer() )
 			return null;
 		
@@ -63,7 +63,7 @@ public class CutGenerator
 		_start = System.currentTimeMillis();
 		_end = _start;
 
-		showPoint("x*", _xstar, "");
+		showPoint("x*", _xstar, " | ", false);
 		showPoint("xbar", _xbar, "");
 	}
 	
@@ -265,10 +265,15 @@ public class CutGenerator
 	
 	private void showPoint(String name, Point y, String text)
 	{
+		showPoint(name, y, text, true);
+	}
+	
+	private void showPoint(String name, Point y, String text, boolean newline)
+	{
 		if( _verbose == false )
 			return;
 
-		System.out.println(" " + name + " = " + y + " - f(x) = " + _f.get(y, _xbar) + (text != null ? ", " + text : ""));
+		System.out.print(" " + name + " = " + y + " - f(x) = " + _f.get(y, _xbar) + (text != null ? text : "") + (newline ? "\r\n" : ""));
 	}
 	
 	private void showRoundSummary()
@@ -323,5 +328,10 @@ public class CutGenerator
 	public static void setVerbose(boolean value)
 	{
 		_verbose = value;
+	}
+
+	public static void setCplexLog(boolean value)
+	{
+		_cplexLog = value;
 	}
 }

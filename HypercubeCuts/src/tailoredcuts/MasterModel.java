@@ -1,4 +1,4 @@
-package cuts;
+package tailoredcuts;
 
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;

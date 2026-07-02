@@ -4,13 +4,12 @@ import stableset.Graph;
 import stableset.StableFunction;
 import stableset.StableModel;
 import stableset.StableRounder;
+import tailoredcuts.Controller;
+import tailoredcuts.CutGenerator;
+import tailoredcuts.Point;
 import stableset.StableCallback;
 
 import java.util.Random;
-
-import cuts.Controller;
-import cuts.CutGenerator;
-import cuts.Point;
 
 public class StableMain
 {

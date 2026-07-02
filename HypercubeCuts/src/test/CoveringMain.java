@@ -1,6 +1,9 @@
 package test;
 
 import covering.Matrix;
+import tailoredcuts.Controller;
+import tailoredcuts.CutGenerator;
+import tailoredcuts.Point;
 
 import java.util.Random;
 
@@ -8,10 +11,6 @@ import covering.CoveringFunction;
 import covering.CoveringModel;
 import covering.CoveringRounder;
 import covering.CoveringCallback;
-
-import cuts.Controller;
-import cuts.CutGenerator;
-import cuts.Point;
 
 public class CoveringMain
 {

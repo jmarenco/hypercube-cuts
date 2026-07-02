@@ -1,23 +1,17 @@
-package stableset;
+package generalcuts;
 
 import java.util.Random;
 
-import tailoredcuts.Point;
-import tailoredcuts.Rounder;
-
-public class StableRounder implements Rounder
+public class Rounder
 {
-	private Graph G;
 	private double _roundingThreshold;
 	private double _upperRoundingProbabilityForOneHalf;
 	
 	private static double _initialRoundingThreshold = 0.01;
 	private static double _initialUpperRoundingProbabilityForOneHalf = 1.0;
 	
-	public StableRounder(Graph graph)
+	public Rounder()
 	{
-		G = graph;
-		
 		_roundingThreshold = _initialRoundingThreshold;
 		_upperRoundingProbabilityForOneHalf = _initialUpperRoundingProbabilityForOneHalf;
 	}
@@ -34,28 +28,6 @@ public class StableRounder implements Rounder
 			else if( xstar.get(i) < 0.5 - _roundingThreshold )
 				ret.set(i, 0);
 			else if( random.nextDouble() <= _upperRoundingProbabilityForOneHalf )
-				ret.set(i, 1);
-			else
-				ret.set(i, 0);
-		}
-		
-		return ret;
-	}
-	
-	public Point roundToFeasible(Point xstar)
-	{
-		if( G.size() != xstar.size() )
-			throw new RuntimeException("Asked to round a point incompatible with the graph");
-		
-		Point ret = new Point(xstar.size());
-		
-		for(int i=0; i<xstar.size(); ++i)
-		{
-			boolean anyNeighbor = false;
-			for(int j=0; j<xstar.size(); ++j) if( i != j && G.isEdge(i,j) && ret.get(j) > 0 )
-				anyNeighbor = true;
-			
-			if( xstar.get(i) > 0.25 && anyNeighbor == false )
 				ret.set(i, 1);
 			else
 				ret.set(i, 0);

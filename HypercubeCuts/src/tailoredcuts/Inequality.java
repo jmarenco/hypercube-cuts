@@ -1,4 +1,4 @@
-package cuts;
+package tailoredcuts;
 
 public class Inequality
 {
