@@ -2,6 +2,7 @@ package test;
 
 import generalcuts.Instance;
 import generalcuts.MasterModel;
+import stableset.Graph;
 import generalcuts.Controller;
 
 public class EntryPoint
@@ -94,7 +95,10 @@ public class EntryPoint
 	
 	private static Instance getInstance(ArgMap _argmap)
 	{
-		return Benchmark.stableSet(StableMain.fourClique());
+		if( _argmap.stringArg("-p", "xxx").equals("stab") )
+			return Benchmark.stableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+		
+		throw new RuntimeException("Unkown problem type! -p " + _argmap.stringArg("-p", "xxx"));
 	}
 	
 	public static String version()
