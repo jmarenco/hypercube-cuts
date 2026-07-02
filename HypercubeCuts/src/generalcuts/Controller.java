@@ -27,7 +27,6 @@ public class Controller
 	{
 		_instance = instance;
 		_master = new MasterModel(_instance);
-		_f = new InfeasibilityFunctionClassical(instance);
 		_rounder = new Rounder();
 	}
 	
@@ -42,6 +41,7 @@ public class Controller
 			Point xstar = _master.solve();
 			Point xbar = _rounder.round(xstar);
 			
+			_f = new InfeasibilityFunctionClassical(_instance, xbar);
 			_firstobj = _firstobj == Double.POSITIVE_INFINITY ? _master.getObjective() : _firstobj;
 			_lastobj = _master.getObjective();
 
