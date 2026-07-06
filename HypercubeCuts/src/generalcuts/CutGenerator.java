@@ -105,7 +105,7 @@ public class CutGenerator
 			
 			if( _N.contains(y) == false && _C.contains(y) == false )
 			{
-				if( _f.get(y, _xbar) <= _f.get(x, _xbar) )
+				if( _f.get(y, x, _xbar) <= _f.get(x, _xbar) )
 				{
 					_N.add(y);
 					ret = true;

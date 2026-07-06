@@ -18,6 +18,11 @@ public class InfeasibilityFunctionClassical extends InfeasibilityFunction
 		
 		return ret;
 	}
+	
+	public double get(Point x, Point xpar, Point xbar)
+	{
+		return get(x, xbar);
+	}
 
 	public boolean feasible(Point x)
 	{

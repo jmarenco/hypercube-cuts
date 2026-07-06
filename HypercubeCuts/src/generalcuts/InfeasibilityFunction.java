@@ -35,6 +35,7 @@ public abstract class InfeasibilityFunction
 	}
 	
 	public abstract double get(Point x, Point xbar);
+	public abstract double get(Point x, Point xpar, Point xbar);
 	public abstract boolean feasible(Point x);
 
 	public ArrayList<Inequality> compatibilityConstraints(Point xbar)
