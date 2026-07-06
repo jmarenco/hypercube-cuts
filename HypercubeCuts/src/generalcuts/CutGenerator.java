@@ -24,7 +24,7 @@ public class CutGenerator
 	
 	private static boolean _verbose = false;
 	private static boolean _showSets = false;
-	private static boolean _showPropagatedPoints = false;
+	private static boolean _showPropagatedPoints = true;
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
 	private static long _maxNsize = 100000;
@@ -109,13 +109,13 @@ public class CutGenerator
 				{
 					_N.add(y);
 					ret = true;
-					result = "added";
+					result = " - added";
 				}
 
 				_C.add(y);
 			}
 			else
-				result = "already in N or C";
+				result = " - already in N or C";
 
 			if( _showPropagatedPoints == true )
 				showPoint("y", y, result);

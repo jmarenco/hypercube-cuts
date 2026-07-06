@@ -1,64 +1,39 @@
 package generalcuts;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Rounder
 {
-	private double _roundingThreshold;
-	private double _upperRoundingProbabilityForOneHalf;
-	
-	private static double _initialRoundingThreshold = 0.01;
-	private static double _initialUpperRoundingProbabilityForOneHalf = 1.0;
-	
+	private double _maxUpperRounding = 7;
+
 	public Rounder()
 	{
-		_roundingThreshold = _initialRoundingThreshold;
-		_upperRoundingProbabilityForOneHalf = _initialUpperRoundingProbabilityForOneHalf;
 	}
 	
 	public Point round(Point xstar)
 	{
-		Random random = new Random(0);
-		Point ret = new Point(xstar.size());
+		Random random = new Random();
+		List<Integer> fractional = fractionalIndices(xstar);
 		
-		for(int i=0; i<xstar.size(); ++i)
+		Point ret = new Point(xstar);
+		for(int i = 0; i < _maxUpperRounding && fractional.size() > 0; ++i)
 		{
-			if( xstar.get(i) > 0.5 + _roundingThreshold )
-				ret.set(i, 1);
-			else if( xstar.get(i) < 0.5 - _roundingThreshold )
-				ret.set(i, 0);
-			else if( random.nextDouble() <= _upperRoundingProbabilityForOneHalf )
-				ret.set(i, 1);
-			else
-				ret.set(i, 0);
+			int j = random.nextInt(fractional.size());
+			ret.set(fractional.get(j), 1);
+			fractional.remove(j);
 		}
+		
+		for(Integer j: fractional)
+			ret.set(j, 0);
 		
 		return ret;
 	}
 	
-	public static void setUpperRoundingProbabilityForOneHalf(double value)
+	private List<Integer> fractionalIndices(Point xstar)
 	{
-		_initialUpperRoundingProbabilityForOneHalf = value;
-	}
-	
-	public void resetAggresiveness()
-	{
-		_roundingThreshold = _initialRoundingThreshold;
-		_upperRoundingProbabilityForOneHalf = _initialUpperRoundingProbabilityForOneHalf;
-	}
-
-	public void moreAggresive()
-	{
-		if( _upperRoundingProbabilityForOneHalf < 0.99 )
-			_upperRoundingProbabilityForOneHalf = 1;
-		else if( _roundingThreshold < 0.05 )
-			_roundingThreshold = 0.1;
-		else if( _roundingThreshold < 0.4 )
-			_roundingThreshold += 0.1;
-	}
-
-	public boolean isMaximumAggresive()
-	{
-		return _roundingThreshold >= 0.39;
+		return IntStream.range(0, xstar.size()).filter(j -> xstar.fractional(j)).boxed().collect(Collectors.toList());
 	}
 }

@@ -50,10 +50,15 @@ public class Point
 		return _x.length;
 	}
 	
+	public boolean fractional(int i)
+	{
+		return _x[i] > 0.001 && _x[i] < 0.999;
+	}
+	
 	public int fractionalEntries()
 	{
 		int ret = 0;
-		for(int i=0; i<_x.length; ++i) if( _x[i] > 0.001 && _x[i] < 0.999 )
+		for(int i=0; i<_x.length; ++i) if( fractional(i) )
 			++ret;
 		
 		return ret;

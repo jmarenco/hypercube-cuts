@@ -39,8 +39,9 @@ public class Controller
 		_master.create();
 		
 		boolean violated = true;
+		int triesLeft = 1;
 		
-		while( violated == true )
+		while( triesLeft > 0 )
 		{
 			Point xstar = _master.solve();
 			Point xbar = _rounder.round(xstar);
@@ -67,6 +68,8 @@ public class Controller
 			_minsupport = dv != null ? Math.min(_minsupport, dv.supportSize()) : _minsupport;
 			_maxsupport = dv != null ? Math.max(_maxsupport, dv.supportSize()) : _maxsupport;
 			_violation += dv != null ? dv.violation(xstar) : 0;
+			
+			triesLeft = violated ? 20 : (triesLeft-1);
 		}
 		
 		_master.close();
@@ -106,7 +109,7 @@ public class Controller
 	{
 		if( _verbose == true )
 		{
-			System.out.print(cutter.getRounds() + " rounds; ");
+			System.out.print(" | " + cutter.getRounds() + " rounds; ");
 			System.out.print("|C| = " + cutter.getCsize() + "; ");
 			System.out.print("|N| = " + cutter.getNsize() + "; ");
 			System.out.print(cutter.getNfeasibles() + " feas; avg infeas = ");
