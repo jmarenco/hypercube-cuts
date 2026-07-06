@@ -82,6 +82,9 @@ public class Controller
 
 		if( _infeasibilityFunction.toLowerCase().trim().equals("card") )
 			return new InfeasibilityFunctionCardinality(_instance, xbar);
+
+		if( _infeasibilityFunction.toLowerCase().trim().equals("weight") )
+			return new InfeasibilityFunctionWeighted(_instance, xbar);
 		
 		throw new RuntimeException("Unknown infeasibility function: " + _infeasibilityFunction);
 	}

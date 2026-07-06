@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.07";
+	private static String _version = "0.08";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -58,7 +58,7 @@ public class EntryPoint
 		System.out.println("  -vc   Verbose controller");
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
-		System.out.println("  -if   Infeasibility function [class|card]");
+		System.out.println("  -if   Infeasibility function [class|card|weight]");
 		System.out.println("  -rp   Rounding probability for 1/2 variables");
 		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
 		System.out.println("  -rio  Remove vertices in order for stab");
