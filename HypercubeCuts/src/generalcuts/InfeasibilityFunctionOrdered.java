@@ -24,14 +24,28 @@ public class InfeasibilityFunctionOrdered extends InfeasibilityFunction
 		if( feasible(x) )
 			return 0.0;
 		
-		int j = firstDifferingPositive(x, xbar);
+		if( xpar == null )
+			return get(x, xbar);
+		
+		int j = firstDecreasing(xpar);
+		
+//		System.out.println(" x = " + x + ", FD = " + j);
+//		System.out.println(" xpar = " + xpar);
+//		System.out.println(" xbar = " + xbar);
+//		System.out.println(" get(xpar,xbar) = " + get(xpar,xbar));
 		return x.get(j) != xpar.get(j) ? get(x,xbar) : get(xpar,xbar) + 0.001;
 	}
 	
-	private int firstDifferingPositive(Point x, Point xbar)
+	private int firstDecreasing(Point xpar)
 	{
-		for(int j=0; j<_instance.getVars(); ++j) if( positive(x,xbar,j) && x.get(j) != xbar.get(j) )
-			return j;
+		for(int j=0; j<_instance.getVars(); ++j)
+		{
+			if( isIncreasing(j) && xpar.get(j) > 0.999 )
+				return j;
+
+			if( isDecreasing(j) && xpar.get(j) < 0.001 )
+				return j;
+		}
 		
 		return -1;
 	}

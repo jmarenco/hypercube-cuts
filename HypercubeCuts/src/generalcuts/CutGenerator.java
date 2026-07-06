@@ -63,8 +63,8 @@ public class CutGenerator
 		_start = System.currentTimeMillis();
 		_end = _start;
 
-		showPoint("x*", _xstar, " | ", false);
-		showPoint("xbar", _xbar, "");
+		showPoint("x*", _xstar, null, " | ", false);
+		showPoint("xbar", _xbar, null, "");
 	}
 	
 	private void propagate()
@@ -109,16 +109,16 @@ public class CutGenerator
 				{
 					_N.add(y);
 					ret = true;
-					result = "added";
+					result = " - added";
 				}
 
 				_C.add(y);
 			}
 			else
-				result = "already in N or C";
+				result = " - already in N or C";
 
 			if( _showPropagatedPoints == true )
-				showPoint("y", y, result);
+				showPoint("y", y, x, result);
 		}
 		
 		_N.remove(x);
@@ -130,6 +130,12 @@ public class CutGenerator
 	private Inequality solve()
 	{
 		Inequality ret = null;
+		
+//		System.out.println();
+//		System.out.println("N = {");
+//		for(Point x: _N)
+//			System.out.println("   " + x);
+//		System.out.println("}");
 		
 		try
 		{
@@ -238,6 +244,9 @@ public class CutGenerator
 		if( _cutFound != null )
 			_cutFound.notify(ret, _xstar);
 		
+//		System.out.println();
+//		System.out.println(ret);
+		
 		return ret;
 	}
 	
@@ -263,17 +272,17 @@ public class CutGenerator
 			System.out.println(", x = " + x + " - f(x) = " + _f.get(x, _xbar));
 	}
 	
-	private void showPoint(String name, Point y, String text)
+	private void showPoint(String name, Point y, Point x, String text)
 	{
-		showPoint(name, y, text, true);
+		showPoint(name, y, x, text, true);
 	}
 	
-	private void showPoint(String name, Point y, String text, boolean newline)
+	private void showPoint(String name, Point y, Point x, String text, boolean newline)
 	{
 		if( _verbose == false )
 			return;
 
-		System.out.print(" " + name + " = " + y + " - f(x) = " + _f.get(y, _xbar) + (text != null ? text : "") + (newline ? "\r\n" : ""));
+		System.out.print(" " + name + " = " + y + " - f(x) = " + _f.get(y, x, _xbar) + (text != null ? text : "") + (newline ? "\r\n" : ""));
 	}
 	
 	private void showRoundSummary()
