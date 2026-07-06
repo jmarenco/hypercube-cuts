@@ -105,7 +105,7 @@ public class CutGenerator
 			
 			if( _N.contains(y) == false && _C.contains(y) == false )
 			{
-				if( _f.get(y, _xbar) <= _f.get(x, _xbar) )
+				if( _f.get(y) <= _f.get(x) )
 				{
 					_N.add(y);
 					ret = true;
@@ -199,7 +199,7 @@ public class CutGenerator
 			cplex.addLe(lhs4, 1, "norm");
 			
 			// Compatibility constraints
-			for(Inequality constraint: _f.compatibilityConstraints(_xbar))
+			for(Inequality constraint: _f.compatibilityConstraints())
 			{
 				IloNumExpr lhs5 = cplex.linearIntExpr();
 				
@@ -260,7 +260,7 @@ public class CutGenerator
 		System.out.print("|N| = " + _N.size() + ", |C| = " + _C.size());
 
 		if( x != null )
-			System.out.println(", x = " + x + " - f(x) = " + _f.get(x, _xbar));
+			System.out.println(", x = " + x + " - f(x) = " + _f.get(x));
 	}
 	
 	private void showPoint(String name, Point y, String text)
@@ -273,7 +273,7 @@ public class CutGenerator
 		if( _verbose == false )
 			return;
 
-		System.out.print(" " + name + " = " + y + " - f(x) = " + _f.get(y, _xbar) + (text != null ? text : "") + (newline ? "\r\n" : ""));
+		System.out.print(" " + name + " = " + y + " - f(x) = " + _f.get(y) + (text != null ? text : "") + (newline ? "\r\n" : ""));
 	}
 	
 	private void showRoundSummary()
@@ -294,6 +294,11 @@ public class CutGenerator
 		return _rounds;
 	}
 	
+	public int getCsize()
+	{
+		return _C.size();
+	}
+	
 	public int getNsize()
 	{
 		return _N.size();
@@ -301,7 +306,7 @@ public class CutGenerator
 	
 	public double getNaverageInfeasibility()
 	{
-		return _N.stream().mapToDouble(x -> _f.get(x, _xbar)).average().orElse(0);
+		return _N.stream().mapToDouble(x -> _f.get(x)).average().orElse(0);
 	}
 	
 	public long getNfeasibles()

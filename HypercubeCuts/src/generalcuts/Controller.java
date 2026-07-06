@@ -106,11 +106,13 @@ public class Controller
 	{
 		if( _verbose == true )
 		{
-			System.out.print(cutter.getRounds() + " rounds, |N| = " + cutter.getNsize() + ", ");
-			System.out.print(cutter.getNfeasibles() + " feas, avg infeas = ");
-			System.out.print(String.format("%.3f", cutter.getNaverageInfeasibility()) + ", ");
+			System.out.print(cutter.getRounds() + " rounds; ");
+			System.out.print("|C| = " + cutter.getCsize() + "; ");
+			System.out.print("|N| = " + cutter.getNsize() + "; ");
+			System.out.print(cutter.getNfeasibles() + " feas; avg infeas = ");
+			System.out.print(String.format("%.3f", cutter.getNaverageInfeasibility()) + "; ");
 			System.out.print(String.format("%.2f", cutter.getElapsedTime()) + " sec | ");
-			System.out.print(dv != null ? "dv: supp = " + dv.supportSize() + ", " : "");
+			System.out.print(dv != null ? "dv: supp = " + dv.supportSize() + "; " : "");
 			System.out.print(dv != null ? "viol = " + String.format("%.3f", dv.violation(xstar)) : "");
 			System.out.print(dv != null && _showInequalities ? " | " + dv : "");
 			System.out.println();

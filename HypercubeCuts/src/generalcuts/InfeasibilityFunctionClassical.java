@@ -7,7 +7,7 @@ public class InfeasibilityFunctionClassical extends InfeasibilityFunction
 		super(instance, xbar);
 	}
 
-	public double get(Point x, Point xbar)
+	public double get(Point x)
 	{
 		if( x.size() != _instance.getVars() )
 			throw new RuntimeException("Size of instance and point do not match!");
@@ -17,10 +17,5 @@ public class InfeasibilityFunctionClassical extends InfeasibilityFunction
 			ret += Math.max(0, -slack(x,i));
 		
 		return ret;
-	}
-
-	public boolean feasible(Point x)
-	{
-		return get(x, null) <= 0;
 	}
 }

@@ -34,22 +34,26 @@ public abstract class InfeasibilityFunction
 		}
 	}
 	
-	public abstract double get(Point x, Point xbar);
-	public abstract boolean feasible(Point x);
+	public abstract double get(Point x);
 
-	public ArrayList<Inequality> compatibilityConstraints(Point xbar)
+	public ArrayList<Inequality> compatibilityConstraints()
 	{
 		ArrayList<Inequality> ret = new ArrayList<Inequality>();
 		
-		for(int j=0; j<xbar.size(); ++j) if( isIncreasing(j) || isDecreasing(j) )
+		for(int j=0; j<_xbar.size(); ++j) if( isIncreasing(j) || isDecreasing(j) )
 		{
-			Inequality constraint = new Inequality(xbar.size());
+			Inequality constraint = new Inequality(_xbar.size());
 			constraint.setLHS(j, isIncreasing(j) ? -1 : 1);
 			constraint.setRHS(0);
 			ret.add(constraint);
 		}
 		
 		return ret;
+	}
+
+	public boolean feasible(Point x)
+	{
+		return IntStream.range(0, _instance.getCons()).allMatch(i -> slack(x,i) >= -0.001);
 	}
 
 	public double getObjective(Point xfeas)
