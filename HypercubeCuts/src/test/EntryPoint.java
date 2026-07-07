@@ -59,10 +59,10 @@ public class EntryPoint
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
 		System.out.println("  -if   Infeasibility function [class|card|weight|seq]");
-		System.out.println("  -rp   Rounding probability for 1/2 variables");
-		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
-		System.out.println("  -rio  Remove vertices in order for stab");
-		System.out.println("  -awn  Aggresive when not violated");
+//		System.out.println("  -rp   Rounding probability for 1/2 variables");
+//		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
+//		System.out.println("  -rio  Remove vertices in order for stab");
+//		System.out.println("  -awn  Aggresive when not violated");
 	}
 
 	private static void processParameters()
