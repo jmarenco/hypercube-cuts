@@ -1,0 +1,66 @@
+package generalcuts;
+
+import java.util.Random;
+
+public class RounderClassical extends Rounder
+{
+	private double _roundingThreshold;
+	private double _upperRoundingProbabilityForOneHalf;
+	
+	private static double _initialRoundingThreshold = 0.01;
+	private static double _initialUpperRoundingProbabilityForOneHalf = 1.0;
+	
+	public RounderClassical(Instance instance)
+	{
+		super(instance);
+		
+		_roundingThreshold = _initialRoundingThreshold;
+		_upperRoundingProbabilityForOneHalf = _initialUpperRoundingProbabilityForOneHalf;
+	}
+	
+	public Point round(Point xstar)
+	{
+		Random random = new Random(0);
+		Point ret = new Point(xstar.size());
+		
+		for(int i=0; i<xstar.size(); ++i)
+		{
+			if( xstar.get(i) > 0.5 + _roundingThreshold )
+				ret.set(i, 1);
+			else if( xstar.get(i) < 0.5 - _roundingThreshold )
+				ret.set(i, 0);
+			else if( random.nextDouble() <= _upperRoundingProbabilityForOneHalf )
+				ret.set(i, 1);
+			else
+				ret.set(i, 0);
+		}
+		
+		return ret;
+	}
+	
+	public static void setUpperRoundingProbabilityForOneHalf(double value)
+	{
+		_initialUpperRoundingProbabilityForOneHalf = value;
+	}
+	
+	public void resetAggresiveness()
+	{
+		_roundingThreshold = _initialRoundingThreshold;
+		_upperRoundingProbabilityForOneHalf = _initialUpperRoundingProbabilityForOneHalf;
+	}
+
+	public void moreAggresive()
+	{
+		if( _upperRoundingProbabilityForOneHalf < 0.99 )
+			_upperRoundingProbabilityForOneHalf = 1;
+		else if( _roundingThreshold < 0.05 )
+			_roundingThreshold = 0.1;
+		else if( _roundingThreshold < 0.4 )
+			_roundingThreshold += 0.1;
+	}
+
+	public boolean isMaximumAggresive()
+	{
+		return _roundingThreshold >= 0.39;
+	}
+}

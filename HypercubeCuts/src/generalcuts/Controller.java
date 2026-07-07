@@ -22,15 +22,17 @@ public class Controller
 	private double _time;
 	private long _start;
 	
+	private static int _attempts = 20;
 	private static boolean _verbose = false;
 	private static boolean _showInequalities = false;
 	private static String _infeasibilityFunction = "class";
+	private static String _roundingProcedure = "class";
 	
 	public Controller(Instance instance)
 	{
 		_instance = instance;
 		_master = new MasterModel(_instance);
-		_rounder = new Rounder();
+		_rounder = createRounder();
 	}
 	
 	public void run()
@@ -39,7 +41,7 @@ public class Controller
 		_master.create();
 		
 		boolean violated = true;
-		int triesLeft = 1;
+		int triesLeft = _attempts;
 		
 		while( triesLeft > 0 )
 		{
@@ -69,7 +71,7 @@ public class Controller
 			_maxsupport = dv != null ? Math.max(_maxsupport, dv.supportSize()) : _maxsupport;
 			_violation += dv != null ? dv.violation(xstar) : 0;
 			
-			triesLeft = violated ? 20 : (triesLeft-1);
+			triesLeft = violated ? _attempts : (triesLeft-1);
 		}
 		
 		_master.close();
@@ -93,6 +95,17 @@ public class Controller
 			return new InfeasibilityFunctionSequence(_instance, xbar);
 		
 		throw new RuntimeException("Unknown infeasibility function: " + _infeasibilityFunction);
+	}
+	
+	private Rounder createRounder()
+	{
+		if( _roundingProcedure.toLowerCase().trim().equals("class") )
+			return new RounderClassical(_instance);
+
+		if( _roundingProcedure.toLowerCase().trim().equals("target") )
+			return new RounderTargeted(_instance);
+
+		throw new RuntimeException("Unknown rounding procedure: " + _roundingProcedure);
 	}
 
 	private void showPoints(Point xstar, Point xbar)
@@ -164,8 +177,18 @@ public class Controller
 		_showInequalities = value;
 	}
 	
+	public static void setCuttingAttempts(int value)
+	{
+		_attempts = value;
+	}
+	
 	public static void setInfeasibilityFunction(String value)
 	{
 		_infeasibilityFunction = value;
+	}
+	
+	public static void setRoundingProcedure(String value)
+	{
+		_roundingProcedure = value;
 	}
 }

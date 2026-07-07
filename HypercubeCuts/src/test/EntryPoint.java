@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.08";
+	private static String _version = "0.09";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -58,11 +58,11 @@ public class EntryPoint
 		System.out.println("  -vc   Verbose controller");
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
+		System.out.println("  -at   Cutting attempts");
 		System.out.println("  -if   Infeasibility function [class|card|weight|seq]");
-//		System.out.println("  -rp   Rounding probability for 1/2 variables");
-//		System.out.println("  -rwi  Only remove vertices when infeasible for stab");
-//		System.out.println("  -rio  Remove vertices in order for stab");
-//		System.out.println("  -awn  Aggresive when not violated");
+		System.out.println("  -r    Rounding procedure [class|target]");
+		System.out.println("  -rp   Rounding probability for 1/2 variables (for classical rounding)");
+		System.out.println("  -rt   Rounding target (for targeted rounding)");
 	}
 
 	private static void processParameters()
@@ -70,11 +70,14 @@ public class EntryPoint
 		generalcuts.MasterModel.setVerbose(_argmap.containsArg("-vm"));
 		generalcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		generalcuts.Controller.setShowInequalities(_argmap.containsArg("-showcuts"));
+		generalcuts.Controller.setCuttingAttempts(_argmap.intArg("-at", 20));
 		generalcuts.Controller.setInfeasibilityFunction(_argmap.stringArg("-if", "class"));
+		generalcuts.Controller.setRoundingProcedure(_argmap.stringArg("-r", "target"));
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
-//		generalcuts.Rounder.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
+		generalcuts.RounderClassical.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
+		generalcuts.RounderTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
 
 		tailoredcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		tailoredcuts.Controller.setAggresiveWhenNotViolated(_argmap.containsArg("-awn"));
