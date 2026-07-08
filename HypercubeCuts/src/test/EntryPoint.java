@@ -53,8 +53,7 @@ public class EntryPoint
 		System.out.println("  -n    Size of instance if random");
 		System.out.println("  -d    Density of instance if random");
 		System.out.println("  -s    Seed of instance if random");
-		System.out.println("  -ms   Multiple runs with seed (-s) to (-s)+(-ms)");
-		System.out.println("  -m    Number of elements if random covering");
+		System.out.println("  -inst File with instance");
 		System.out.println("  -vc   Verbose controller");
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
@@ -102,7 +101,12 @@ public class EntryPoint
 	private static Instance getInstance(ArgMap _argmap)
 	{
 		if( _argmap.stringArg("-p", "xxx").equals("stab") )
-			return Benchmark.stableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+		{
+			if( _argmap.containsArg("-inst") )
+				return Benchmark.stableSet(DimacsReader.read(_argmap.stringArg("-inst", "xxx")));
+			else
+				return Benchmark.stableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+		}
 		
 		throw new RuntimeException("Unkown problem type! -p " + _argmap.stringArg("-p", "xxx"));
 	}
