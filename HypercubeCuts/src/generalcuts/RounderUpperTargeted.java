@@ -5,27 +5,19 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RounderTargeted extends Rounder
+public class RounderUpperTargeted extends Rounder
 {
 	private static int _maxUpperRounding = 7;
-	private List<Integer> _increasing;
 
-	public RounderTargeted(Instance instance)
+	public RounderUpperTargeted(Instance instance)
 	{
 		super(instance);
-
-		_increasing = IntStream.range(0, _instance.getVars()).filter(j -> colSum(j) > 0).boxed().collect(Collectors.toList());
-	}
-	
-	private double colSum(int j)
-	{
-		return IntStream.range(0, _instance.getCons()).mapToDouble(i -> _instance.getA(i,j)).sum();
 	}
 	
 	public Point round(Point xstar)
 	{
 		Random random = new Random();
-		List<Integer> fractional = fractionalIncreasingIndices(xstar);
+		List<Integer> fractional = fractionalIndices(xstar);
 		
 		Point ret = new Point(xstar);
 		for(int i = 0; i < _maxUpperRounding && fractional.size() > 0; ++i)
@@ -41,9 +33,9 @@ public class RounderTargeted extends Rounder
 		return ret;
 	}
 	
-	private List<Integer> fractionalIncreasingIndices(Point xstar)
+	private List<Integer> fractionalIndices(Point xstar)
 	{
-		return _increasing.stream().filter(j -> xstar.fractional(j)).collect(Collectors.toList());
+		return IntStream.range(0, xstar.size()).filter(j -> xstar.fractional(j)).boxed().collect(Collectors.toList());
 	}
 	
 	public static void setMaxRounding(int value)

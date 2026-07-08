@@ -11,6 +11,7 @@ public class Controller
 	
 	private int _iterations = 0;
 	private int _rounds = 0;
+	private int _cuts = 0;
 	private double _nsize = 0;
 	private double _feasibles = 0;
 	private double _supportsize = 0;
@@ -64,6 +65,7 @@ public class Controller
 
 			_iterations += 1;
 			_rounds += cutter.getRounds();
+			_cuts += violated ? 1 : 0;
 			_nsize += cutter.getNsize();
 			_feasibles += cutter.getNfeasibles();
 			_supportsize += dv != null ? dv.supportSize() : 0;
@@ -101,6 +103,9 @@ public class Controller
 	{
 		if( _roundingProcedure.toLowerCase().trim().equals("class") )
 			return new RounderClassical(_instance);
+
+		if( _roundingProcedure.toLowerCase().trim().equals("upper") )
+			return new RounderUpperTargeted(_instance);
 
 		if( _roundingProcedure.toLowerCase().trim().equals("target") )
 			return new RounderTargeted(_instance);
@@ -140,6 +145,7 @@ public class Controller
 		System.out.print("v" + EntryPoint.version() + " | ");
 		System.out.print(_iterations + " its | ");
 		System.out.print(_rounds + " rounds | ");
+		System.out.print(_cuts + " cuts | ");
 		System.out.print("LR: " + _firstobj + " | ");
 		System.out.print("cLR: " + _lastobj + " | ");
 		System.out.print(String.format("%.2f", _time) + " sec. | ");

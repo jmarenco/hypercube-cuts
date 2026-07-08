@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.09";
+	private static String _version = "0.10";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -60,9 +60,9 @@ public class EntryPoint
 		System.out.println("  -mn   Max size for |N|");
 		System.out.println("  -at   Cutting attempts");
 		System.out.println("  -if   Infeasibility function [class|card|weight|seq]");
-		System.out.println("  -r    Rounding procedure [class|target]");
+		System.out.println("  -r    Rounding procedure [class|upper|target]");
 		System.out.println("  -rp   Rounding probability for 1/2 variables (for classical rounding)");
-		System.out.println("  -rt   Rounding target (for targeted rounding)");
+		System.out.println("  -rt   Rounding target (for upper and targeted rounding)");
 	}
 
 	private static void processParameters()
@@ -78,6 +78,7 @@ public class EntryPoint
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
 		generalcuts.RounderClassical.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 		generalcuts.RounderTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
+		generalcuts.RounderUpperTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
 
 		tailoredcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		tailoredcuts.Controller.setAggresiveWhenNotViolated(_argmap.containsArg("-awn"));
