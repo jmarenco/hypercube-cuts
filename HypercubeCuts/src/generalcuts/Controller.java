@@ -95,6 +95,9 @@ public class Controller
 
 		if( _infeasibilityFunction.toLowerCase().trim().equals("seq") )
 			return new InfeasibilityFunctionSequence(_instance, xbar);
+
+		if( _infeasibilityFunction.toLowerCase().trim().equals("free") )
+			return new InfeasibilityFunctionFree(_instance, xbar);
 		
 		throw new RuntimeException("Unknown infeasibility function: " + _infeasibilityFunction);
 	}

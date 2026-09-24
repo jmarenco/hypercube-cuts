@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.10";
+	private static String _version = "0.11";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -58,7 +58,7 @@ public class EntryPoint
 		System.out.println("  -vg   Verbose cut generator");
 		System.out.println("  -mn   Max size for |N|");
 		System.out.println("  -at   Cutting attempts");
-		System.out.println("  -if   Infeasibility function [class|card|weight|seq]");
+		System.out.println("  -if   Infeasibility function [class|card|weight|seq|free]");
 		System.out.println("  -r    Rounding procedure [class|upper|target]");
 		System.out.println("  -rp   Rounding probability for 1/2 variables (for classical rounding)");
 		System.out.println("  -rt   Rounding target (for upper and targeted rounding)");
