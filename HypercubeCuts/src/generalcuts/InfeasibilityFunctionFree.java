@@ -1,5 +1,7 @@
 package generalcuts;
 
+import java.util.ArrayList;
+
 public class InfeasibilityFunctionFree extends InfeasibilityFunction
 {
 	public InfeasibilityFunctionFree(Instance instance, Point xbar)
@@ -15,6 +17,22 @@ public class InfeasibilityFunctionFree extends InfeasibilityFunction
 		double ret = 0;
 		for(int i=0; i<_instance.getCons(); ++i) if( isTarget(i) )
 			ret -= slack(x,i);
+		
+		return ret;
+	}
+	
+	@Override
+	public ArrayList<Inequality> compatibilityConstraints()
+	{
+		ArrayList<Inequality> ret = new ArrayList<Inequality>();
+		
+		for(int j=0; j<_xbar.size(); ++j)
+		{
+			Inequality constraint = new Inequality(_xbar.size());
+			constraint.setLHS(j, _xbar.get(j) > 0.5 ? -1 : 1);
+			constraint.setRHS(0);
+			ret.add(constraint);
+		}
 		
 		return ret;
 	}
