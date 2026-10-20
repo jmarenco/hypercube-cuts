@@ -29,6 +29,7 @@ public class CutGenerator
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
 	private static boolean _propagateUntilFeasible = false;
+	private static boolean _propagateDecreasing = true;
 	private static boolean _separatexStar = false;
 	private static long _maxNsize = 100000;
 	private static CutFoundCallback _cutFound = null;
@@ -116,7 +117,7 @@ public class CutGenerator
 			
 			if( _N.contains(y) == false && _C.contains(y) == false )
 			{
-				if( _f.get(y) < _f.get(x) )
+				if( _f.get(y) < _f.get(x) || _propagateDecreasing == false )
 				{
 					_N.add(y);
 					ret = true;
@@ -369,6 +370,11 @@ public class CutGenerator
 			throw new RuntimeException("-prop feas can only be applied to column-homogeneous instances!");
 		
 		_propagateUntilFeasible = value;
+	}
+	
+	public static void setPropagateDecreasing(boolean value)
+	{
+		_propagateDecreasing = value;
 	}
 	
 	public static void setSeparatexStar(boolean value)
