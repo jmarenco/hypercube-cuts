@@ -2,6 +2,7 @@ package test;
 
 import generalcuts.Instance;
 import stableset.Graph;
+import covering.Matrix;
 
 public class Benchmark
 {
@@ -21,6 +22,24 @@ public class Benchmark
 
 		for(int i=0; i<G.size(); ++i)
 			ret.setC(i, 1.0);
+		
+		return ret;
+	}
+	
+	public static Instance setCovering(Matrix M)
+	{
+		Instance ret = new Instance(M.elements(), M.sets());
+		
+		for(int i=0; i<M.elements(); ++i)
+		{
+			for(int j=0; j<M.sets(); ++j) if( M.get(i, j) )
+				ret.setA(i, j, -1.0);
+			
+			ret.setB(i, -1.0);
+		}
+		
+		for(int j=0; j<M.sets(); ++j)
+			ret.setC(j, -1.0);
 		
 		return ret;
 	}

@@ -16,7 +16,7 @@ public class EntryPoint
 		if( _argmap.containsArg("-help") )
 			showParameters();
 		
-		Instance instance = getInstance(_argmap);
+		Instance instance = getInstance();
 		processParameters(instance);
 		
 		// Runs procedure
@@ -103,7 +103,7 @@ public class EntryPoint
 			CoveringMain.run(_argmap);
 	}
 	
-	private static Instance getInstance(ArgMap _argmap)
+	private static Instance getInstance()
 	{
 		if( _argmap.stringArg("-p", "xxx").equals("stab") )
 		{
@@ -113,6 +113,11 @@ public class EntryPoint
 				return Benchmark.stableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
 		}
 		
+		if( _argmap.stringArg("-p", "xxx").equals("cov") )
+		{
+			return Benchmark.setCovering(CoveringMain.randomMatrix(_argmap.intArg("-m", 5), _argmap.intArg("-n", 7), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+		}
+
 		throw new RuntimeException("Unkown problem type! -p " + _argmap.stringArg("-p", "xxx"));
 	}
 	
