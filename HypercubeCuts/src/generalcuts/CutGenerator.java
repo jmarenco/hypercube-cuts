@@ -366,8 +366,8 @@ public class CutGenerator
 	
 	public static void setPropagateUntilFeasible(Instance instance, boolean value)
 	{
-		if( value == true && instance.isHomogeneous() == false )
-			throw new RuntimeException("-prop feas can only be applied to column-homogeneous instances!");
+		if( value == true && instance.isHomogeneous() == false && _propagateDecreasing )
+			throw new RuntimeException("-prop feas and decreasing can only be applied to column-homogeneous instances!");
 		
 		_propagateUntilFeasible = value;
 	}

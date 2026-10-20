@@ -77,8 +77,8 @@ public class EntryPoint
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
-		generalcuts.CutGenerator.setPropagateUntilFeasible(instance, _argmap.stringArg("-prop", "neg").equals("feas") || _argmap.stringArg("-prop", "neg").equals("all"));
 		generalcuts.CutGenerator.setPropagateDecreasing(_argmap.stringArg("-prop", "neg").equals("all") == false);
+		generalcuts.CutGenerator.setPropagateUntilFeasible(instance, _argmap.stringArg("-prop", "neg").equals("feas") || _argmap.stringArg("-prop", "neg").equals("all"));
 		generalcuts.CutGenerator.setSeparatexStar(_argmap.containsArg("-sxs"));
 		generalcuts.RounderClassical.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 		generalcuts.RounderTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
