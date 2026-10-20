@@ -28,10 +28,6 @@ public class RounderTargeted extends Rounder
 		Random random = new Random();
 		List<Integer> fractional = fractionalIncreasingIndices(xstar);
 		
-//		System.out.print("fr: ");
-//		for(Integer i: fractional)
-//			System.out.print(i + " ");
-		
 		Point ret = new Point(xstar);
 		for(int i = 0; i < _maxUpperRounding && fractional.size() > 0; ++i)
 		{
@@ -43,7 +39,6 @@ public class RounderTargeted extends Rounder
 		for(Integer j: fractional)
 			ret.set(j, 0);
 
-//		System.out.println("ñññ" + ret);
 		return ret;
 	}
 	
