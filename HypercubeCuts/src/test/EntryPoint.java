@@ -49,7 +49,7 @@ public class EntryPoint
 	private static void showParameters()
 	{
 		System.out.println("Hypercube cuts v" + _version);
-		System.out.println("  -p    Problem to be solved [stab|cov]");
+		System.out.println("  -p    Problem to be solved [stab|cov|domstab]");
 		System.out.println("  -n    Size of instance if random");
 		System.out.println("  -d    Density of instance if random");
 		System.out.println("  -s    Seed of instance if random");
@@ -116,6 +116,14 @@ public class EntryPoint
 		if( _argmap.stringArg("-p", "xxx").equals("cov") )
 		{
 			return Benchmark.setCovering(CoveringMain.randomMatrix(_argmap.intArg("-m", 5), _argmap.intArg("-n", 7), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+		}
+
+		if( _argmap.stringArg("-p", "xxx").equals("domstab") )
+		{
+			if( _argmap.containsArg("-inst") )
+				return Benchmark.dominatingStableSet(DimacsReader.read(_argmap.stringArg("-inst", "xxx")));
+			else
+				return Benchmark.dominatingStableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
 		}
 
 		throw new RuntimeException("Unkown problem type! -p " + _argmap.stringArg("-p", "xxx"));

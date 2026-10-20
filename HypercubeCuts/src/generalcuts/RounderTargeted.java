@@ -14,7 +14,8 @@ public class RounderTargeted extends Rounder
 	{
 		super(instance);
 
-		_increasing = IntStream.range(0, _instance.getVars()).filter(j -> colSum(j) > 0).boxed().collect(Collectors.toList());
+//		_increasing = IntStream.range(0, _instance.getVars()).filter(j -> colSum(j) > 0).boxed().collect(Collectors.toList());
+		_increasing = IntStream.range(0, _instance.getVars()).boxed().sorted((i,j) -> (int)Math.signum(colSum(j)-colSum(i))).collect(Collectors.toList());
 	}
 	
 	private double colSum(int j)
@@ -27,6 +28,10 @@ public class RounderTargeted extends Rounder
 		Random random = new Random();
 		List<Integer> fractional = fractionalIncreasingIndices(xstar);
 		
+//		System.out.print("fr: ");
+//		for(Integer i: fractional)
+//			System.out.print(i + " ");
+		
 		Point ret = new Point(xstar);
 		for(int i = 0; i < _maxUpperRounding && fractional.size() > 0; ++i)
 		{
@@ -37,7 +42,8 @@ public class RounderTargeted extends Rounder
 		
 		for(Integer j: fractional)
 			ret.set(j, 0);
-		
+
+//		System.out.println("ñññ" + ret);
 		return ret;
 	}
 	
