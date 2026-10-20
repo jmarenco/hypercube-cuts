@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.HashSet;
+import java.util.List;
 
 import ilog.cplex.IloCplex;
 import ilog.cplex.IloCplex.Status;
@@ -27,6 +28,7 @@ public class CutGenerator
 	private static boolean _showPropagatedPoints = true;
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
+	private static boolean _propagateUntilFeasible = false;
 	private static long _maxNsize = 100000;
 	private static CutFoundCallback _cutFound = null;
 	
@@ -74,7 +76,7 @@ public class CutGenerator
 		{
 			cont = false;
 
-			for(Point x: _N.stream().filter(x -> !_f.feasible(x)).collect(Collectors.toList()))
+			for(Point x: propagablePoints())
 			{
 				if( cont = propagate(x) ) // Hmmm ...
 					break;
@@ -85,6 +87,14 @@ public class CutGenerator
 		}
 
 		showSets("Done!", true, false, null);
+	}
+	
+	private List<Point> propagablePoints()
+	{
+		if( _propagateUntilFeasible == false)
+			return _N.stream().filter(x -> _f.get(x) > 0).collect(Collectors.toList());
+		else
+			return _N.stream().filter(x -> !_f.feasible(x)).collect(Collectors.toList());
 	}
 	
 	private boolean propagate(Point x)
@@ -338,5 +348,13 @@ public class CutGenerator
 	public static void setCplexLog(boolean value)
 	{
 		_cplexLog = value;
+	}
+	
+	public static void setPropagateUntilFeasible(Instance instance, boolean value)
+	{
+		if( value == true && instance.isHomogeneous() == false )
+			throw new RuntimeException("-prop feas can only be applied to column-homogeneous instances!");
+		
+		_propagateUntilFeasible = value;
 	}
 }

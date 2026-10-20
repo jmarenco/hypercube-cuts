@@ -1,5 +1,7 @@
 package generalcuts;
 
+import java.util.stream.IntStream;
+
 public class Instance 
 {
 	private int m;
@@ -55,5 +57,16 @@ public class Instance
 	public double getC(int j)
 	{
 		return c[j];
+	}
+	
+	public boolean isHomogeneous()
+	{
+		return IntStream.range(0, n).allMatch(j -> isColumnHomogeneous(j));
+	}
+	
+	private boolean isColumnHomogeneous(int j)
+	{
+		return IntStream.range(0, m).allMatch(i -> getA(i,j) >= 0)
+			|| IntStream.range(0, m).allMatch(i -> getA(i,j) <= 0);
 	}
 }

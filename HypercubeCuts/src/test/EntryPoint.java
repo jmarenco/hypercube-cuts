@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.11";
+	private static String _version = "0.12";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -16,8 +16,8 @@ public class EntryPoint
 		if( _argmap.containsArg("-help") )
 			showParameters();
 		
-		processParameters();
 		Instance instance = getInstance(_argmap);
+		processParameters(instance);
 		
 		// Runs procedure
 		Controller controller = new Controller(instance);
@@ -62,9 +62,10 @@ public class EntryPoint
 		System.out.println("  -r    Rounding procedure [class|upper|target]");
 		System.out.println("  -rp   Rounding probability for 1/2 variables (for classical rounding)");
 		System.out.println("  -rt   Rounding target (for upper and targeted rounding)");
+		System.out.println("  -prop Propagation procedure [neg|feas]");
 	}
 
-	private static void processParameters()
+	private static void processParameters(Instance instance)
 	{
 		generalcuts.MasterModel.setVerbose(_argmap.containsArg("-vm"));
 		generalcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
@@ -75,6 +76,7 @@ public class EntryPoint
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
+		generalcuts.CutGenerator.setPropagateUntilFeasible(instance, _argmap.stringArg("-prop", "neg").equals("feas"));
 		generalcuts.RounderClassical.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 		generalcuts.RounderTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
 		generalcuts.RounderUpperTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
