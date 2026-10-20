@@ -63,6 +63,7 @@ public class EntryPoint
 		System.out.println("  -rp   Rounding probability for 1/2 variables (for classical rounding)");
 		System.out.println("  -rt   Rounding target (for upper and targeted rounding)");
 		System.out.println("  -prop Propagation procedure [neg|feas]");
+		System.out.println("  -sxs  Add constraint separating x*");
 	}
 
 	private static void processParameters(Instance instance)
@@ -77,6 +78,7 @@ public class EntryPoint
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
 		generalcuts.CutGenerator.setCplexLog(_argmap.containsArg("-cplexlog"));
 		generalcuts.CutGenerator.setPropagateUntilFeasible(instance, _argmap.stringArg("-prop", "neg").equals("feas"));
+		generalcuts.CutGenerator.setSeparatexStar(_argmap.containsArg("-sxs"));
 		generalcuts.RounderClassical.setUpperRoundingProbabilityForOneHalf(_argmap.doubleArg("-rp", 1.0));
 		generalcuts.RounderTargeted.setMaxRounding(_argmap.intArg("-rt", 7));
 		generalcuts.RounderUpperTargeted.setMaxRounding(_argmap.intArg("-rt", 7));

@@ -29,6 +29,7 @@ public class CutGenerator
 	private static boolean _roundSummary = false;
 	private static boolean _cplexLog = false;
 	private static boolean _propagateUntilFeasible = false;
+	private static boolean _separatexStar = false;
 	private static long _maxNsize = 100000;
 	private static CutFoundCallback _cutFound = null;
 	
@@ -184,6 +185,18 @@ public class CutGenerator
 			
 			lhs1 = cplex.sum(lhs1, cplex.prod(-1, pi0));
 			cplex.addGe(lhs1, 0.01, "xb");
+			
+			// Constraint for xstar
+			if( _separatexStar == true )
+			{
+				IloNumExpr lhs6 = cplex.linearIntExpr();
+				
+				for(int i=0; i<_xbar.size(); ++i)
+					lhs6 = cplex.sum(lhs6, cplex.prod(_xstar.get(i), pi[i]));
+				
+				lhs6 = cplex.sum(lhs6, cplex.prod(-1, pi0));
+				cplex.addGe(lhs6, 0.01, "xs");
+			}
 			
 			// Constraints for piabs
 			for(int i=0; i<_xbar.size(); ++i)
@@ -356,5 +369,10 @@ public class CutGenerator
 			throw new RuntimeException("-prop feas can only be applied to column-homogeneous instances!");
 		
 		_propagateUntilFeasible = value;
+	}
+	
+	public static void setSeparatexStar(boolean value)
+	{
+		_separatexStar = value;
 	}
 }

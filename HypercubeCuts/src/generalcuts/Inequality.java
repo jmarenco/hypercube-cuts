@@ -1,5 +1,7 @@
 package generalcuts;
 
+import java.util.stream.IntStream;
+
 public class Inequality
 {
 	private double[] _lhs;
@@ -56,15 +58,29 @@ public class Inequality
 	@Override public String toString()
 	{
 		String ret = "";
+		double base = smallestNonzero();
 		
 		for(int j=0; j<_lhs.length; ++j) if( Math.abs(_lhs[j]) > 0.001 )
 		{
 			if( _lhs[j] > 0 )
 				ret += " + ";
 			
-			ret += _lhs[j] + " x(" + j + ")";
+			double coeff = _lhs[j] / base;
+			
+			if( Math.abs(coeff - 1) < 0.001 )
+				ret += "x(" + j + ")";
+			else if( Math.abs(coeff + 1) < 0.001 )
+				ret += " - x(" + j + ")";
+			else
+				ret += " " + coeff + " x(" + j + ")";
 		}
 		
-		return ret + " <= " + _rhs;
+		return ret + " <= " + (_rhs / base);
+	}
+	
+	private double smallestNonzero()
+	{
+		double smallest = IntStream.range(0, _lhs.length).mapToDouble(i -> Math.abs(_lhs[i])).filter(a -> a > 0.001).min().orElse(_rhs);
+		return Math.min(smallest, Math.abs(_rhs) > 0.001 ? Math.abs(_rhs) : smallest);
 	}
 }
