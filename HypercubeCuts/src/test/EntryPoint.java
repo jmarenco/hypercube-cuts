@@ -22,8 +22,6 @@ public class EntryPoint
 		// Runs procedure
 		Controller controller = new Controller(instance);
 		controller.run();
-
-		System.out.println("Opt: " + integerOptimal(instance));
 	}
 	
 	public static double integerOptimal(Instance instance)

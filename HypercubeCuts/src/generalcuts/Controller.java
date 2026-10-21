@@ -26,6 +26,7 @@ public class Controller
 	private static int _attempts = 20;
 	private static boolean _verbose = false;
 	private static boolean _showInequalities = false;
+	private static boolean _showOptimum = true;
 	private static String _infeasibilityFunction = "class";
 	private static String _roundingProcedure = "class";
 	
@@ -173,6 +174,9 @@ public class Controller
 		{
 			System.out.print(" | | | | | | ");
 		}
+		
+		if( _showOptimum == true )
+			System.out.print("Opt: " + EntryPoint.integerOptimal(_instance) + " | ");
 
 		System.out.print(EntryPoint.argmap());
 		System.out.println();
