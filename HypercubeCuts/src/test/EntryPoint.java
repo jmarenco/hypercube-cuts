@@ -72,7 +72,7 @@ public class EntryPoint
 		generalcuts.Controller.setVerbose(_argmap.containsArg("-vc"));
 		generalcuts.Controller.setShowInequalities(_argmap.containsArg("-showcuts"));
 		generalcuts.Controller.setCuttingAttempts(_argmap.intArg("-at", 20));
-		generalcuts.Controller.setInfeasibilityFunction(_argmap.stringArg("-if", "class"));
+		generalcuts.Controller.setInfeasibilityFunction(_argmap.stringArg("-if", "free"));
 		generalcuts.Controller.setRoundingProcedure(_argmap.stringArg("-r", "target"));
 		generalcuts.CutGenerator.setMaxNsize(_argmap.intArg("-mn", 0));
 		generalcuts.CutGenerator.setVerbose(_argmap.containsArg("-vg"));
