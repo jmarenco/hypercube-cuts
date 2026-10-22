@@ -32,6 +32,7 @@ public class CutGenerator
 	private static boolean _propagateDecreasing = true;
 	private static boolean _separatexStar = false;
 	private static long _maxNsize = 100000;
+	private static long _maxTime = 60; // Seconds
 	private static CutFoundCallback _cutFound = null;
 	
 	public CutGenerator(Point xstar, Point xbar, InfeasibilityFunction f)
@@ -74,7 +75,7 @@ public class CutGenerator
 	private void propagate()
 	{
 		boolean cont = true;
-		while( cont == true && _N.size() <= _maxNsize )
+		while( cont == true && _N.size() <= _maxNsize && System.currentTimeMillis() - _start <= 1000 * _maxTime )
 		{
 			cont = false;
 
@@ -93,7 +94,7 @@ public class CutGenerator
 	
 	private List<Point> propagablePoints()
 	{
-		if( _propagateUntilFeasible == false)
+		if( _propagateUntilFeasible == false )
 			return _N.stream().filter(x -> _f.get(x) > 0).collect(Collectors.toList());
 		else
 			return _N.stream().filter(x -> !_f.feasible(x)).collect(Collectors.toList());
@@ -107,7 +108,7 @@ public class CutGenerator
 			throw new RuntimeException("Asked to propagate point not in N!");
 		
 		if( _f.feasible(x) == true )
-			throw new RuntimeException("Asked to propagate feasible point!");
+			throw new RuntimeException("Asked to propagate feasible point! " + x);
 
 		boolean ret = false;
 		for(int i=0; i<x.size(); ++i)

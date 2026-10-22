@@ -24,6 +24,7 @@ public class Controller
 	private long _start;
 	
 	private static int _attempts = 20;
+	private static long _maxTime = 900; // Seconds
 	private static boolean _verbose = false;
 	private static boolean _showInequalities = false;
 	private static boolean _showOptimum = true;
@@ -45,7 +46,7 @@ public class Controller
 		boolean violated = true;
 		int triesLeft = _attempts;
 		
-		while( triesLeft > 0 )
+		while( triesLeft > 0 && System.currentTimeMillis() - _start <= 1000 * _maxTime )
 		{
 			Point xstar = _master.solve();
 			Point xbar = _rounder.round(xstar);

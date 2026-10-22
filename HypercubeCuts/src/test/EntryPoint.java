@@ -6,7 +6,7 @@ import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.12";
+	private static String _version = "0.14";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)

@@ -21,6 +21,12 @@ public class Point
 	
 	public void set(int i, double value)
 	{
+		if( value < 0.01 )
+			value = 0;
+		
+		if( value > 0.99 )
+			value = 1;
+		
 		_x[i] = value;
 	}
 	
