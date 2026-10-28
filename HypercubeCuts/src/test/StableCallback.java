@@ -30,7 +30,7 @@ public class StableCallback implements CutFoundCallback
 	
 	public void notify(Inequality inequality, Point xstar)
 	{
-		if( inequality == null )
+		if( inequality == null || inequality.violated(xstar) == false )
 			return;
 		
 		int[] d = degrees(inequality);
