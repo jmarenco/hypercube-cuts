@@ -179,6 +179,9 @@ public class Controller
 		if( _showOptimum == true )
 			System.out.print("Opt: " + EntryPoint.integerOptimal(_instance) + " | ");
 
+		if( CutGenerator.getCallback() != null )
+			CutGenerator.getCallback().print();
+
 		System.out.print(EntryPoint.argmap());
 		System.out.println();
 	}

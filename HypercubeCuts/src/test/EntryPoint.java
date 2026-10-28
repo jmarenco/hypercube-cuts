@@ -2,11 +2,13 @@ package test;
 
 import generalcuts.Instance;
 import generalcuts.MasterModel;
+import stableset.Graph;
+import generalcuts.CutGenerator;
 import generalcuts.Controller;
 
 public class EntryPoint
 {
-	private static String _version = "0.14";
+	private static String _version = "0.15";
 	private static ArgMap _argmap;
 	
 	public static void main(String[] args)
@@ -105,10 +107,17 @@ public class EntryPoint
 	{
 		if( _argmap.stringArg("-p", "xxx").equals("stab") )
 		{
+			Graph G = null;
+			
 			if( _argmap.containsArg("-inst") )
-				return Benchmark.stableSet(DimacsReader.read(_argmap.stringArg("-inst", "xxx")));
+				G = DimacsReader.read(_argmap.stringArg("-inst", "xxx"));
 			else
-				return Benchmark.stableSet(StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0)));
+				G = StableMain.erdosRenyi(_argmap.intArg("-n", 15), _argmap.doubleArg("-d", 0.4), _argmap.intArg("-s", 0));
+			
+			StableCallback callback = new StableCallback(G);
+			CutGenerator.setCallback(callback);
+			
+			return Benchmark.stableSet(G);
 		}
 		
 		if( _argmap.stringArg("-p", "xxx").equals("cov") )
@@ -126,7 +135,7 @@ public class EntryPoint
 
 		throw new RuntimeException("Unkown problem type! -p " + _argmap.stringArg("-p", "xxx"));
 	}
-	
+
 	public static String version()
 	{
 		return _version;

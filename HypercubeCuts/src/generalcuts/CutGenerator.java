@@ -354,6 +354,11 @@ public class CutGenerator
 	{
 		_cutFound = cutFound;
 	}
+	
+	public static CutFoundCallback getCallback()
+	{
+		return _cutFound;
+	}
 
 	public static void setVerbose(boolean value)
 	{
